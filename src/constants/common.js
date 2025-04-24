@@ -1,0 +1,1 @@
+export const EmptyUrl = "/images/empty_image.jpg";
