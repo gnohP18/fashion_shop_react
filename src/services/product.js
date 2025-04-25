@@ -16,10 +16,11 @@ export const updateBasicProductAsync = (id, data) => {
   return apiClient.put(`/api/product-management/products/${id}`, data);
 }
 
+export const createBasicProductAsync = (data) => {
+  return apiClient.post("/api/product-management/products", data);
+}
+
 export const updateProductVariantAsync = (id, data) => {
   return apiClient.put(`/api/product-management/products/variants/${id}`, data)
 }
 
-export const getListCategory = (params) => {
-  return apiClient.get("/api/product-management/categories", params)
-}

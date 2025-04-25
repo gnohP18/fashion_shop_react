@@ -9,31 +9,58 @@ const SideBar = ({ collapsed }) => {
 
   const items = [
     {
-      label: "Dashboard",
+      label: "Trang chủ",
       icon: "pi pi-home",
-      path: "/",
+      command: () => navigate("/"),
     },
     {
-      label: "Products",
-      icon: "pi pi-box",
-      path: "/products",
+      label: "Quản lý sản phẩm",
+      items: [
+        {
+          label: "Sản phẩm",
+          icon: "pi pi-box",
+          command: () => navigate("/products"),
+        },
+        {
+          label: "Danh mục",
+          icon: "pi pi-tags",
+          command: () => navigate("/categories"),
+        },
+      ],
     },
     {
-      label: "Users",
-      icon: "pi pi-users",
-      path: "/users",
+      label: "Quản lý đơn hàng",
+      items: [
+        {
+          label: "Đặt hàng",
+          icon: "pi pi-shopping-cart",
+          command: () => navigate("/orders"),
+        },
+      ],
     },
+
     {
-      label: "Orders",
-      icon: "pi pi-shopping-cart",
-      path: "/orders",
+      label: "Quản lý người dùng",
+      items: [
+        {
+          label: "Người dùng",
+          icon: "pi pi-users",
+          command: () => navigate("/users"),
+        },
+      ],
+    },
+
+    {
+      label: "Cài đặt",
+      items: [
+        {
+          label: "Thông tin hệ thống",
+          icon: "pi pi-cog",
+          command: () => navigate("/settings/basic"),
+        },
+      ],
     },
   ];
-  const menuItems = items.map((item) => ({
-    ...item,
-    className: isActive(item.path),
-    command: () => navigate(item.path),
-  }));
 
   return (
     <div
@@ -42,7 +69,7 @@ const SideBar = ({ collapsed }) => {
       } transition-all transition-duration-300`}
     >
       <Menu
-        model={menuItems}
+        model={items}
         className="w-full h-full border-none bg-primary text-white"
       />
     </div>
