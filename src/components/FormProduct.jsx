@@ -10,6 +10,7 @@ import { InputTextarea } from "primereact/inputtextarea";
 import { InputNumber } from "primereact/inputnumber";
 import { Dropdown } from "primereact/dropdown";
 import { extractSuffixSlug } from "../utils/common";
+import { ActionMode } from "../constants/common";
 
 const FormProduct = ({ mode, categories, productInfo = {}, onSubmit }) => {
   const {
@@ -17,6 +18,7 @@ const FormProduct = ({ mode, categories, productInfo = {}, onSubmit }) => {
     handleSubmit,
     setValue,
     getValues,
+    watch,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(basicProductSchema),
@@ -24,10 +26,12 @@ const FormProduct = ({ mode, categories, productInfo = {}, onSubmit }) => {
       name: productInfo.name ?? "",
       price: productInfo.price ?? 0,
       description: productInfo.description ?? "",
-      slug: extractSuffixSlug(productInfo.slug).prefix ?? "",
-      categoryId: productInfo.categoryId ?? null,
+      slug: productInfo.slug ? extractSuffixSlug(productInfo.slug).prefix : "",
+      categoryId: productInfo.categoryId ?? categories?.[0].id,
     },
   });
+
+  const selectedCategory = watch("categoryId");
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full">
@@ -69,13 +73,13 @@ const FormProduct = ({ mode, categories, productInfo = {}, onSubmit }) => {
                 <label htmlFor="category">Danh mục sản phẩm</label>
                 <Dropdown
                   id="category"
-                  value={getValues("categoryId")}
+                  value={selectedCategory}
+                  onChange={(e) => setValue("categoryId", e.target.value)}
                   options={categories}
                   optionValue="id"
                   optionLabel="name"
                   placeholder="Tìm kiếm theo danh mục"
                   className="w-full"
-                  onChange={(e) => setValue("categoryId", e.target.value)}
                 />
               </FloatLabel>
             </Validate>
@@ -83,7 +87,7 @@ const FormProduct = ({ mode, categories, productInfo = {}, onSubmit }) => {
 
           <Validate error={errors.slug?.message} className="col">
             <FloatLabel className="w-full">
-              <label htmlFor="slug">Tên sản phẩm</label>
+              <label htmlFor="slug">Đường dẫn sản phẩm</label>
               <InputText
                 id="slug"
                 placeholder="Vui lòng nhập đường dẫn sản phẩm"
@@ -106,7 +110,7 @@ const FormProduct = ({ mode, categories, productInfo = {}, onSubmit }) => {
 
         <div className="text-end mt-4">
           <button type="submit" className="p-button p-component">
-            {mode === "update" ? "Cập nhật" : "Tạo mới"}
+            {mode === ActionMode.Update ? "Cập nhật" : "Tạo mới"}
           </button>
         </div>
       </Card>

@@ -1,7 +1,10 @@
 import { Toast } from "primereact/toast";
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getListProductItem } from "../../services/product";
+import {
+  getListProductItem,
+  updateProductVariantAsync,
+} from "../../services/product";
 import { Button } from "primereact/button";
 import { InputNumber } from "primereact/inputnumber";
 import { Card } from "primereact/card";
@@ -11,6 +14,9 @@ import UploadImageWithPreview from "../../components/UploadImageWithPreview";
 import { Dialog } from "primereact/dialog";
 
 import { Chip } from "primereact/chip";
+import Swal from "sweetalert2";
+import { showErrorToasts } from "../../utils/toast";
+import { handleFormatError } from "../../utils/errorHandler";
 
 const screenName = "Chỉnh sửa từng biến thể";
 
@@ -50,6 +56,32 @@ const ProductItem = () => {
         item.id === productItemId ? { ...item, imageUrl: url } : item
       )
     );
+  };
+
+  const handleChangePrice = (productItemId, price) => {
+    const updatedItems = productItems.map((item) =>
+      item.id === productItemId ? { ...item, price } : item
+    );
+    setProductItems(updatedItems);
+  };
+
+  const updateProductItem = async () => {
+    const data = {
+      isVariant: true,
+      productItems,
+    };
+
+    await updateProductVariantAsync(id, data)
+      .then(() => {
+        Swal.fire({
+          title: "Auto close alert!",
+          text: "I will close in 2 seconds.",
+          timer: 2000,
+        });
+      })
+      .catch((err) => {
+        showErrorToasts(toast, handleFormatError(err));
+      });
   };
 
   return (
@@ -113,6 +145,9 @@ const ProductItem = () => {
                     mode="currency"
                     currency="VND"
                     placeholder="Vui lòng nhập giá sản phẩm"
+                    onValueChange={(e) =>
+                      handleChangePrice(productItem.id, e.value)
+                    }
                     locale="vi-VN"
                   />
                 </div>
@@ -126,6 +161,11 @@ const ProductItem = () => {
               </div>
             );
           })}
+        </div>
+        <div className="flex justify-content-end mt-4">
+          <Button className="p-button p-component" onClick={updateProductItem}>
+            Lưu
+          </Button>
         </div>
       </Card>
       <Dialog

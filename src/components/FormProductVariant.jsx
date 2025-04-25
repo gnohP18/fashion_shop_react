@@ -179,12 +179,14 @@ const FormProductVariant = ({
             />
           </div>
           <div>
-            <Button
-              severity="secondary"
-              onClick={() => navigate(`/products/item/${productId}`)}
-            >
-              Chi tiết biến thể
-            </Button>
+            {isVariant ? (
+              <Button
+                severity="secondary"
+                onClick={() => navigate(`/products/item/${productId}`)}
+              >
+                Chi tiết biến thể
+              </Button>
+            ) : null}
           </div>
         </div>
 
