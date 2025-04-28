@@ -19,3 +19,14 @@ export const extractSuffixSlug = (slug) => {
   };
 }
 
+/**
+ * format yyyy-mm-dd
+ * @param {*} date 
+ * @returns dateString
+ */
+export const formatDateYYYYMMDD = (date) => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0'); // thêm số 0 nếu nhỏ hơn 10
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};

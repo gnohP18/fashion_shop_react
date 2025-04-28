@@ -200,10 +200,11 @@ const Order = () => {
           <Column field="userId" header="ID Khách hàng"></Column>
           <Column field="username" header="Khách hàng"></Column>
           <Column
-            field="totalItem"
+            field="totalAmount"
             body={priceTemplate}
-            header="Số sản phẩm"
+            header="Tổng tiền"
           ></Column>
+          <Column field="totalItem" header="Số sản phẩm"></Column>
           <Column field="createdAt" header="Tạo lúc"></Column>
           <Column header="Hành động" body={actionTemplate}></Column>
         </DataTable>

@@ -11,6 +11,8 @@ import { getListCategory } from "../../services/category";
 const screenName = "Tạo mới sản phẩm";
 
 const CreateProduct = () => {
+  document.title = screenName;
+
   const navigate = useNavigate();
   const toast = useRef();
   const [categories, setCategories] = useState(null);

@@ -10,6 +10,7 @@ const ProductItem = lazy(() => import('./products/item'));
 const CreateProduct = lazy(() => import('./products/create'));
 const Order = lazy(() => import('./orders'));
 const BasicSetting = lazy(() => import('./settings/basic'));
+const StatisticSetting = lazy(() => import('./settings/statistic'));
 const User = lazy(() => import('./users'));
 const Admin = lazy(() => import('./admin'));
 const Login = lazy(() => import('./login'));
@@ -27,6 +28,7 @@ export const privateRoutes = [
       { path: 'categories', element: <Category /> },
       { path: 'orders', element: <Order /> },
       { path: 'settings/basic', element: <BasicSetting /> },
+      { path: 'settings/statistic', element: <StatisticSetting /> },
       { path: 'users', element: <User /> },
       { path: 'me', element: <Admin /> },
     ],

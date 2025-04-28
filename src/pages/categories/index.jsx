@@ -28,6 +28,8 @@ import { handleFormatError } from "../../utils/errorHandler";
 const screenName = "Danh sách danh mục";
 
 const Category = () => {
+  document.title = screenName;
+
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const defaultParams = {

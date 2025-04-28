@@ -37,7 +37,7 @@ const Header = ({ onToggleSidebar }) => {
   ];
 
   return (
-    <header className="surface-0 shadow-2 w-full flex align-items-center justify-content-between px-4 h-4rem surface-border">
+    <header className="surface-0 shadow-2 w-full flex align-items-center justify-content-between px-4 h-6rem surface-border py-2">
       <Button
         icon="pi pi-bars"
         className="p-button-text p-button-plain p-button-sm"
