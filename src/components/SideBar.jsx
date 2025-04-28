@@ -58,6 +58,11 @@ const SideBar = ({ collapsed }) => {
           icon: "pi pi-cog",
           command: () => navigate("/settings/basic"),
         },
+        {
+          label: "Hiển thị báo cáo",
+          icon: "pi pi-chart-bar",
+          command: () => navigate("/settings/statistic"),
+        },
       ],
     },
   ];

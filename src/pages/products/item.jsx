@@ -21,6 +21,8 @@ import { handleFormatError } from "../../utils/errorHandler";
 const screenName = "Chỉnh sửa từng biến thể";
 
 const ProductItem = () => {
+  document.title = screenName;
+
   const { id } = useParams();
   const [visible, setVisible] = useState(false);
   const [productItems, setProductItems] = useState([]);
