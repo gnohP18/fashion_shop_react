@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import SideBar from "../components/SideBar";
 import { useDispatch } from "react-redux";
 import { fetchStatisticSetting } from "../store/slices/settingSlice";
+import { fetchPersonalProfile } from "../store/slices/profileSlice";
 
 const AdminLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -12,6 +13,7 @@ const AdminLayout = () => {
 
   useEffect(() => {
     dispatch(fetchStatisticSetting());
+    dispatch(fetchPersonalProfile());
   }, [dispatch]);
 
   return (
@@ -31,7 +33,7 @@ const AdminLayout = () => {
         </aside>
 
         {/* Main content */}
-        <main className="flex-1 bg-surface-0 px-3 overflow-y-auto">
+        <main className="flex-1 bg-surface-0 px-3 overflow-y-auto pt-3">
           <Outlet />
         </main>
       </div>

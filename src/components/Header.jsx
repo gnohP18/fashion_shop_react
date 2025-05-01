@@ -3,18 +3,20 @@ import { Menu } from "primereact/menu";
 import { Button } from "primereact/button";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../store/slices/authSlice";
 import {
   STORAGE_AUTH_ACCESS_KEY,
   STORAGE_AUTH_REFRESH_KEY,
 } from "../constants/authentication";
-import { setAccessToken } from "../utils/auth";
+import { setAccessToken, setRefreshToken } from "../utils/auth";
+import { EmptyUrl } from "../constants/common";
 
 const Header = ({ onToggleSidebar }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const menuRef = useRef(null);
+  const profile = useSelector((state) => state.personalProfile.data);
 
   const items = [
     {
@@ -29,15 +31,15 @@ const Header = ({ onToggleSidebar }) => {
       icon: "pi pi-sign-out",
       command: () => {
         dispatch(logout());
-        setAccessToken(STORAGE_AUTH_ACCESS_KEY, "");
-        setAccessToken(STORAGE_AUTH_REFRESH_KEY, "");
+        setAccessToken("", STORAGE_AUTH_ACCESS_KEY);
+        setRefreshToken("", STORAGE_AUTH_REFRESH_KEY);
         navigate("/login");
       },
     },
   ];
 
   return (
-    <header className="surface-0 shadow-2 w-full flex align-items-center justify-content-between px-4 h-6rem surface-border py-2">
+    <header className="surface-0 shadow-2 w-full flex align-items-center justify-content-between px-4 surface-border py-2">
       <Button
         icon="pi pi-bars"
         className="p-button-text p-button-plain p-button-sm"
@@ -50,6 +52,7 @@ const Header = ({ onToggleSidebar }) => {
           size="medium"
           shape="circle"
           className="cursor-pointer"
+          image={profile?.imageUrl ?? EmptyUrl}
           onClick={(e) => menuRef.current.toggle(e)}
         />
         <Menu model={items} popup ref={menuRef} />

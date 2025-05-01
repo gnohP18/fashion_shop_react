@@ -68,7 +68,7 @@ class ApiClient {
           console.error(`UnAuthenticated: ${status}`);
 
           const errorData = { errors: data.message };
-          setAccessToken('');
+          setAccessToken("");
           window.location.href = '/login';
           return Promise.reject(errorData);
         } else if (

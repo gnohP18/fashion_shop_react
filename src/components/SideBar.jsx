@@ -1,11 +1,8 @@
 import { Menu } from "primereact/menu";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const SideBar = ({ collapsed }) => {
   const navigate = useNavigate();
-  const location = useLocation();
-
-  const isActive = (path) => (location.pathname === path ? "text-bold" : "");
 
   const items = [
     {
@@ -32,9 +29,14 @@ const SideBar = ({ collapsed }) => {
       label: "Quản lý đơn hàng",
       items: [
         {
-          label: "Đặt hàng",
+          label: "Quản lý đơn hàng",
           icon: "pi pi-shopping-cart",
           command: () => navigate("/orders"),
+        },
+        {
+          label: "Đặt hàng",
+          icon: "pi pi-cart-arrow-down",
+          command: () => navigate("/orders/create"),
         },
       ],
     },
@@ -62,6 +64,11 @@ const SideBar = ({ collapsed }) => {
           label: "Hiển thị báo cáo",
           icon: "pi pi-chart-bar",
           command: () => navigate("/settings/statistic"),
+        },
+        {
+          label: "Thông tin cá nhân",
+          icon: "pi pi-user",
+          command: () => navigate("/settings/me"),
         },
       ],
     },
