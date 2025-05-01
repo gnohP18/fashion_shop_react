@@ -12,12 +12,12 @@ import 'primeflex/primeflex.css';
 import { privateRoutes, publicRoutes } from './pages/routes';
 import PrivateRoute from './components/PrivateRoute';
 import PublicRoute from './components/PublicRoute';
-
+import Loading from './components/Loading';
 
 function App({ Component, pageProps }) {
   return (
     <PrimeReactProvider>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<Loading />}>
         <Routes>
           {/* Public routes */}
           <Route element={<PublicRoute />}>

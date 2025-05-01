@@ -16,6 +16,8 @@ import {
 } from "../../constants/pagination";
 import { Dropdown } from "primereact/dropdown";
 import { getListCategory } from "../../services/category";
+import { EmptyUrl } from "../../constants/common";
+import { Image } from "primereact/image";
 
 const screenName = "Danh sách sản phẩm";
 
@@ -44,10 +46,13 @@ const Product = () => {
 
   const imageBodyTemplate = (product) => {
     return (
-      <img
-        src={product.imageUrl}
+      <Image
+        src={product.imageUrl ?? EmptyUrl}
         alt={product.image}
-        className="w-3rem shadow-2 border-round"
+        className="shadow-2 border-round"
+        width="64px"
+        height="64px"
+        preview
       />
     );
   };

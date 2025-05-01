@@ -39,8 +39,6 @@ const Login = () => {
               user: null,
             })
           );
-          console.log(res);
-
           setAccessToken(res?.data.access_token);
           setRefreshToken(res?.data.refresh_token);
           navigate("/");

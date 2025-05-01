@@ -67,6 +67,10 @@ const Order = () => {
   const resetSearch = () => {
     setParams(defaultParams);
     setKeySearch("");
+    setMaxDate("");
+    setMaxPrice("");
+    setMinDate("");
+    setMinDate("");
     navigate({
       pathname: window.location.pathname,
       search: "",
@@ -81,7 +85,9 @@ const Order = () => {
     return (
       <div>
         <div className="flex flex-row gap-4">
-          <i className="pi pi-arrow-right"></i>
+          <a href={`/orders/${item.id}`}>
+            <i className="pi pi-arrow-right"></i>
+          </a>
         </div>
       </div>
     );

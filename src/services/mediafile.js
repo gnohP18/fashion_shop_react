@@ -7,3 +7,7 @@ export const createPresignedUploadProductUrl = (id, data) => {
 export const createPresignedUploadProductItemUrl = (id, data) => {
   return apiClient.post(`/api/product-management/products/product-items/${id}/presigned-upload`, data);
 }
+
+export const createPresignedUploadAvatarUrl = (data) => {
+  return apiClient.post('/api/me/presigned-upload', data);
+}
