@@ -61,13 +61,14 @@ class ApiClient {
 
         if (status === StatusCode.INTERNAL_SERVER_ERROR) {
           console.error(`Server error: ${status}`);
+          return Promise.reject([data.message]);
         } else if (status === StatusCode.NOT_FOUND) {
           console.error(`Not found: ${status}`);
         } else if (status === StatusCode.UNAUTHENTICATED) {
           console.error(`UnAuthenticated: ${status}`);
 
           const errorData = { errors: data.message };
-          setAccessToken('');
+          setAccessToken("");
           window.location.href = '/login';
           return Promise.reject(errorData);
         } else if (

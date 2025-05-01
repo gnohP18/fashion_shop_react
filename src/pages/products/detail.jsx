@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import {
-  getListCategory,
   getProductDetail,
   updateBasicProductAsync,
   updateProductVariantAsync,
@@ -11,6 +10,8 @@ import { Toast } from "primereact/toast";
 import { showErrorToasts, showSuccessToast } from "../../utils/toast";
 import FormProductVariant from "../../components/FormProductVariant";
 import UploadImageWithPreview from "../../components/UploadImageWithPreview";
+import { ActionMode } from "../../constants/common";
+import { getListCategory } from "../../services/category";
 
 const screenName = "Chi tiết sản phẩm";
 const ProductDetail = () => {
@@ -111,7 +112,7 @@ const ProductDetail = () => {
       <Toast ref={toast} />
       {product ? (
         <FormProduct
-          mode={"update"}
+          mode={ActionMode.Update}
           productInfo={product}
           categories={categories}
           onSubmit={onUpdateBasicProduct}

@@ -2,7 +2,7 @@ import { Card } from "primereact/card";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import React, { useEffect, useState } from "react";
-import { getListCategory, getListProduct } from "../../services/product";
+import { getListProduct } from "../../services/product";
 import { formatVnd } from "../../utils/common";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { InputText } from "primereact/inputtext";
@@ -15,6 +15,9 @@ import {
   SORT_BY,
 } from "../../constants/pagination";
 import { Dropdown } from "primereact/dropdown";
+import { getListCategory } from "../../services/category";
+import { EmptyUrl } from "../../constants/common";
+import { Image } from "primereact/image";
 
 const screenName = "Danh sách sản phẩm";
 
@@ -43,10 +46,13 @@ const Product = () => {
 
   const imageBodyTemplate = (product) => {
     return (
-      <img
-        src={product.imageUrl}
+      <Image
+        src={product.imageUrl ?? EmptyUrl}
         alt={product.image}
-        className="w-3rem shadow-2 border-round"
+        className="shadow-2 border-round"
+        width="64px"
+        height="64px"
+        preview
       />
     );
   };
@@ -62,7 +68,7 @@ const Product = () => {
   const actionBodyTemplate = (product) => {
     return (
       <div
-        className="flex flex-row"
+        className="flex flex-row w-full"
         onClick={() => navigate(`/products/${product.id}`)}
       >
         <i className="pi pi-arrow-right w-full text-end"></i>
@@ -181,7 +187,6 @@ const Product = () => {
           totalRecords={metaData.total}
           paginator
           onSort={(e) => {
-            console.log(e.sortOrder);
             updateParams({
               SortBy: e.sortField,
             });
@@ -193,6 +198,7 @@ const Product = () => {
               Offset: e.rows,
             });
           }}
+          lazy
         >
           <Column
             selectionMode="multiple"

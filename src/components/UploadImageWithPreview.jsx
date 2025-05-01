@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FileUpload } from "primereact/fileupload";
 import { Card } from "primereact/card";
 import {
+  createPresignedUploadAvatarUrl,
   createPresignedUploadProductItemUrl,
   createPresignedUploadProductUrl,
 } from "../services/mediafile";
@@ -16,6 +17,7 @@ const UploadImageWithPreview = ({
   onUploaded,
 }) => {
   const [imageUrl, setImageUrl] = useState(null);
+  const fileUploadRef = useRef(null);
 
   useEffect(() => {
     if (productImage) {
@@ -52,6 +54,12 @@ const UploadImageWithPreview = ({
         );
         presignedUrl = resProductItem.data;
         break;
+
+      case "user":
+        const resUser = await createPresignedUploadAvatarUrl(requestPayload);
+        presignedUrl = resUser.data;
+        break;
+
       default:
         break;
     }
@@ -79,7 +87,11 @@ const UploadImageWithPreview = ({
 
       const imageUrl = presignedUrl.split("?")[0];
       setImageUrl(imageUrl);
-      onUploaded(objectId, imageUrl);
+      if (onUploaded) {
+        onUploaded(objectId, imageUrl);
+      }
+      fileUploadRef.current?.clear();
+      fileUploadRef.current?.setUploadedFiles([file]);
     }
   };
 
@@ -109,9 +121,10 @@ const UploadImageWithPreview = ({
         </div>
 
         <FileUpload
+          ref={fileUploadRef}
           name="image"
           accept="image/*"
-          maxFileSize={1000000}
+          maxFileSize={10000000}
           multiple={false}
           customUpload
           uploadHandler={handleUpload}
