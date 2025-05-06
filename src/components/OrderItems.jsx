@@ -3,8 +3,9 @@ import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import { formatVnd } from "../utils/common";
 import { EmptyUrl } from "../constants/common";
+import { Button } from "primereact/button";
 
-const OrderItems = ({ orderItems }) => {
+const OrderItems = ({ orderItems, removeOrderItem }) => {
   const imageBodyTemplate = (orderItem) => {
     return (
       <img
@@ -24,6 +25,23 @@ const OrderItems = ({ orderItems }) => {
       <p className="text-end w-full">
         {formatVnd(orderItem.price * orderItem.quantity)}
       </p>
+    );
+  };
+
+  const actionTemplate = (orderItem) => {
+    return (
+      <Button
+        icon="pi pi-times"
+        rounded
+        text
+        severity="danger"
+        aria-label="Cancel"
+        onClick={() => {
+          if (removeOrderItem) {
+            removeOrderItem(orderItem);
+          }
+        }}
+      />
     );
   };
 
@@ -51,12 +69,8 @@ const OrderItems = ({ orderItems }) => {
         <Column field="productName" header="Tên"></Column>
         <Column field="quantity" header="Số lượng"></Column>
         <Column field="price" body={priceBodyTemplate} header="Giá"></Column>
-        <Column
-          body={totalBodyTemplate}
-          header="Thành tiền"
-          headerClassName="text-right"
-          bodyClassName="text-right"
-        ></Column>
+        <Column body={totalBodyTemplate} header="Thành tiền"></Column>
+        <Column body={actionTemplate} header="Xoá"></Column>
       </DataTable>
     </Card>
   );

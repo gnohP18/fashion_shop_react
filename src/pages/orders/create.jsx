@@ -67,11 +67,17 @@ const CreateOrder = () => {
     if (value) {
       const res = await checkExistPhone({ phone: value });
       setExists(res);
-      setExistMessage(
-        res
-          ? "Số điện thoại đã tồn tại vui lòng bấm tải thông tin khách hàng."
-          : "Số điện thoại chưa tồn tại"
-      );
+      if (res) {
+        await loadUserByPhone({ phone }).then((res) => {
+          setUsername(res.data.username);
+          setEmail(res.data.email);
+          setExistMessage("");
+        });
+      } else {
+        setUsername("");
+        setEmail("");
+        setExistMessage("Số điện thoại chưa tồn tại");
+      }
     }
 
     setChecking(false);
@@ -111,8 +117,6 @@ const CreateOrder = () => {
   };
 
   const addProductItem = (data) => {
-    console.log(data);
-
     if (selectedProductItems.filter((pi) => pi.id === data.id).length > 0) {
       return;
     }
@@ -125,6 +129,15 @@ const CreateOrder = () => {
     setSelectedProductItems(updateSelectedProductItems);
 
     showSuccessToast(toast, "Thêm sản phẩm thành công");
+  };
+
+  const removeOrderItem = (orderItem) => {
+    console.log(orderItem);
+
+    setSelectedProductItems(
+      selectedProductItems.filter((i) => i.id !== orderItem.id)
+    );
+    showSuccessToast(toast, "Xoá sản phẩm thành công");
   };
 
   const onSubmit = async () => {
@@ -222,14 +235,6 @@ const CreateOrder = () => {
             </small>
           </div>
           <div className="col-6"></div>
-          <div className="col-6">
-            <div className="py-2">
-              <Button disabled={!exists} onClick={loadUser}>
-                Tải thông tin khách hàng
-              </Button>
-            </div>
-          </div>
-          <div className="col-6"></div>
 
           <div className="col-12 md:col-6">
             <FloatLabel className="w-full">
@@ -276,7 +281,10 @@ const CreateOrder = () => {
         </div>
       </Card>
 
-      <OrderItems orderItems={selectedProductItems} />
+      <OrderItems
+        orderItems={selectedProductItems}
+        removeOrderItem={removeOrderItem}
+      />
 
       <div className="w-full text-right py-3">
         <Button
