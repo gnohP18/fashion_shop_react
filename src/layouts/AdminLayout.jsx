@@ -5,6 +5,7 @@ import SideBar from "../components/SideBar";
 import { useDispatch } from "react-redux";
 import { fetchStatisticSetting } from "../store/slices/settingSlice";
 import { fetchPersonalProfile } from "../store/slices/profileSlice";
+import { requestPermissionAndGetToken } from "../firebase/firebase";
 
 const AdminLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -12,6 +13,7 @@ const AdminLayout = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    requestPermissionAndGetToken();
     dispatch(fetchStatisticSetting());
     dispatch(fetchPersonalProfile());
   }, [dispatch]);

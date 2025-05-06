@@ -1,6 +1,6 @@
 import axios from "axios";
 import * as StatusCode from "./../constants/statusCode";
-import { STORAGE_AUTH_ACCESS_KEY } from "../constants/authentication";
+import { STORAGE_AUTH_ACCESS_KEY, STORAGE_AUTH_FCM_TOKEN } from "../constants/authentication";
 import { setAccessToken } from "../utils/auth";
 
 // Singleton class để quản lý API client
@@ -31,6 +31,7 @@ class ApiClient {
 
   async getHeaders() {
     const token = localStorage.getItem(STORAGE_AUTH_ACCESS_KEY);
+    const fcmToken = localStorage.getItem(STORAGE_AUTH_FCM_TOKEN);
     const headers = {
       Accept: "application/json",
       "Content-Type": "application/json",
@@ -38,6 +39,10 @@ class ApiClient {
 
     if (token) {
       headers["Authorization"] = token;
+    }
+
+    if (token) {
+      headers["fcm_token"] = fcmToken;
     }
 
     return headers;
@@ -69,7 +74,7 @@ class ApiClient {
 
           const errorData = { errors: data.message };
           setAccessToken("");
-          window.location.href = '/login';
+          // window.location.href = '/login';
           return Promise.reject(errorData);
         } else if (
           [
