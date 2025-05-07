@@ -42,7 +42,6 @@ export const getUnreadNotifications = async (userId) => {
   const notificationQuery = query(notificationsRef, orderByChild('IsRead'), equalTo(false));
 
   const snapshot = await get(notificationQuery);
-  console.log(snapshot.exists());
 
   return snapshot.exists()
 }

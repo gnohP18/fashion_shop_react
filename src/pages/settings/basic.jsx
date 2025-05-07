@@ -13,12 +13,16 @@ import { InputText } from "primereact/inputtext";
 import Swal from "sweetalert2";
 import { showErrorToasts } from "../../utils/toast";
 import { handleFormatError } from "../../utils/errorHandler";
+import { useSelector } from "react-redux";
+import { isNotAllowRole } from "../../utils/common";
+import { Button } from "primereact/button";
 
 const screenName = "Thông tin hệ thống";
 
 const BasicSetting = () => {
   document.title = screenName;
   const toast = useRef(null);
+  const role = useSelector((state) => state.personalProfile.role);
 
   const {
     setValue,
@@ -64,6 +68,7 @@ const BasicSetting = () => {
           <Validate error={errors.shopName?.message} label="Tên danh mục">
             <InputText
               id="shop_name"
+              readOnly={isNotAllowRole(role)}
               {...register("shopName")}
               className={`w-full ${
                 errors.shopName?.message ? "p-invalid" : ""
@@ -73,6 +78,7 @@ const BasicSetting = () => {
           <Validate error={errors.shopEmail?.message} label="Tên danh mục">
             <InputText
               id="shop_email"
+              readOnly={isNotAllowRole(role)}
               {...register("shopEmail")}
               className={`w-full ${
                 errors.shopEmail?.message ? "p-invalid" : ""
@@ -82,6 +88,7 @@ const BasicSetting = () => {
           <Validate error={errors.shopPhone?.message} label="Tên danh mục">
             <InputText
               id="shop_phone"
+              readOnly={isNotAllowRole(role)}
               {...register("shopPhone")}
               className={`w-full ${
                 errors.shopPhone?.message ? "p-invalid" : ""
@@ -91,6 +98,7 @@ const BasicSetting = () => {
           <Validate error={errors.shopAddress?.message} label="Tên danh mục">
             <InputText
               id="shop_address"
+              readOnly={isNotAllowRole(role)}
               {...register("shopAddress")}
               className={`w-full ${
                 errors.shopAddress?.message ? "p-invalid" : ""
@@ -99,9 +107,12 @@ const BasicSetting = () => {
           </Validate>
 
           <div className="text-end mt-4">
-            <button type="submit" className="p-button p-component">
+            <Button
+              type="submit"
+              className={`${isNotAllowRole(role) ? "hidden" : ""}`}
+            >
               Cập nhật
-            </button>
+            </Button>
           </div>
         </form>
       </Card>

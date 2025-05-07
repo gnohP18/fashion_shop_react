@@ -3,7 +3,7 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import React, { useEffect, useState } from "react";
 import { getListProduct } from "../../services/product";
-import { formatVnd } from "../../utils/common";
+import { formatVnd, isNotAllowRole } from "../../utils/common";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { InputText } from "primereact/inputtext";
 import { FloatLabel } from "primereact/floatlabel";
@@ -18,6 +18,7 @@ import { Dropdown } from "primereact/dropdown";
 import { getListCategory } from "../../services/category";
 import { EmptyUrl } from "../../constants/common";
 import { Image } from "primereact/image";
+import { useSelector } from "react-redux";
 
 const screenName = "Danh sách sản phẩm";
 
@@ -25,6 +26,7 @@ const Product = () => {
   document.title = screenName;
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
+  const role = useSelector((state) => state.personalProfile.role);
 
   const defaultParams = {
     Offset: parseInt(searchParams.get("Offset") || OFFSET.toString()),
@@ -139,7 +141,7 @@ const Product = () => {
         <h2 className="flex-1">{screenName}</h2>
         <Button
           icon="pi pi-plus"
-          className="gap-2"
+          className={`gap-2 ${isNotAllowRole(role) ? "hidden" : ""}`}
           onClick={() => navigate("/products/create")}
         >
           Tạo mới
