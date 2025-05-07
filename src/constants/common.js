@@ -9,6 +9,11 @@ export const ActionMode = {
   Delete: "DELETE"
 }
 
+export const RoleNames = {
+  Admin: "Admin",
+  Manager: "Manager"
+}
+
 export const colorChart = [
   { backgroundColor: 'rgba(255, 159, 64, 0.2)', borderColor: 'rgb(255, 159, 64)' },
   { backgroundColor: 'rgba(75, 192, 192, 0.2)', borderColor: 'rgb(75, 192, 192)' },

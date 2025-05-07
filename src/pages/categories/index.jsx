@@ -24,6 +24,8 @@ import Swal from "sweetalert2";
 import { showErrorToasts } from "../../utils/toast";
 import { Toast } from "primereact/toast";
 import { handleFormatError } from "../../utils/errorHandler";
+import { isNotAllowRole } from "../../utils/common";
+import { useSelector } from "react-redux";
 
 const screenName = "Danh sách danh mục";
 
@@ -45,6 +47,8 @@ const Category = () => {
   const [rowClick, setRowClick] = useState(true);
   const [keySearch, setKeySearch] = useState("");
   const [selectedCategories, setSelectedCategories] = useState(null);
+  const role = useSelector((state) => state.personalProfile.role);
+
   const toast = useRef();
 
   const updateParams = (newParams) => {
@@ -156,7 +160,7 @@ const Category = () => {
         <h2 className="flex-1">{screenName}</h2>
         <Button
           icon="pi pi-plus"
-          className="gap-2"
+          className={`gap-2 ${isNotAllowRole(role) ? "hidden" : ""}`}
           onClick={() => setVisible(true)}
         >
           Tạo mới
@@ -210,7 +214,9 @@ const Category = () => {
           <Column field="id" header="ID"></Column>
           <Column field="name" header="Tên"></Column>
           <Column field="numberOfProduct" header="Số sản phẩm"></Column>
-          <Column header="Hành động" body={actionTemplate}></Column>
+          {isNotAllowRole(role) ? null : (
+            <Column header="Hành động" body={actionTemplate}></Column>
+          )}
         </DataTable>
       </Card>
 

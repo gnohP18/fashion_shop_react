@@ -14,6 +14,7 @@ const FormProductVariant = ({
   isVariant,
   productVariants,
   changeStatusVariant,
+  isView = true,
 }) => {
   const [statusVariant, setStatusVariant] = useState(false);
   const [visibleButtonAdd, setVisibleButtonAdd] = useState(false);
@@ -174,6 +175,7 @@ const FormProductVariant = ({
             <span id="is_variant">Trạng thái</span>
             <InputSwitch
               id="is_variant"
+              disabled={isView}
               checked={statusVariant}
               onChange={(e) => handleChangeStatus(e.target.value)}
             />
@@ -208,6 +210,7 @@ const FormProductVariant = ({
                   <InputText
                     id={`product_variant_name_${typeIndex}`}
                     placeholder="VD: Màu sắc"
+                    maxLength={10}
                     value={variantType.name}
                     onChange={(e) =>
                       handleVariantTypeChange(typeIndex, e.target.value)

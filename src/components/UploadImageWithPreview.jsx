@@ -15,6 +15,7 @@ const UploadImageWithPreview = ({
   productImage,
   showSweetAlert = true,
   onUploaded,
+  isView = true,
 }) => {
   const [imageUrl, setImageUrl] = useState(null);
   const fileUploadRef = useRef(null);
@@ -131,7 +132,7 @@ const UploadImageWithPreview = ({
           chooseLabel="Chọn ảnh"
           uploadLabel="Tải ảnh lên"
           cancelLabel="Xoá"
-          className="w-full"
+          className={`w-full ${isView ? "hidden" : ""}`}
           pt={{
             uploadButton: { root: { "aria-hidden": false } },
             chooseButton: { root: { "aria-hidden": false } },

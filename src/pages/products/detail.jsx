@@ -10,13 +10,16 @@ import { Toast } from "primereact/toast";
 import { showErrorToasts, showSuccessToast } from "../../utils/toast";
 import FormProductVariant from "../../components/FormProductVariant";
 import UploadImageWithPreview from "../../components/UploadImageWithPreview";
-import { ActionMode } from "../../constants/common";
+import { ActionMode, RoleNames } from "../../constants/common";
 import { getListCategory } from "../../services/category";
+import { useSelector } from "react-redux";
+import { isNotAllowRole } from "../../utils/common";
 
 const screenName = "Chi tiết sản phẩm";
 const ProductDetail = () => {
   document.title = screenName;
   const { id } = useParams();
+  const role = useSelector((state) => state.personalProfile.role);
   const [product, setProduct] = useState(null);
   const [categories, setCategories] = useState(null);
   const toast = useRef(null);
@@ -116,6 +119,7 @@ const ProductDetail = () => {
           productInfo={product}
           categories={categories}
           onSubmit={onUpdateBasicProduct}
+          isView={RoleNames.Manager === role}
         />
       ) : null}
 
@@ -124,6 +128,7 @@ const ProductDetail = () => {
           objectId={id}
           objectType="product"
           productImage={product.imageUrl}
+          isView={RoleNames.Manager === role}
         />
       )}
 
@@ -133,6 +138,7 @@ const ProductDetail = () => {
           isVariant={product.isVariant}
           productVariants={product.productVariants}
           changeStatusVariant={changeStatusVariant}
+          isView={isNotAllowRole(role)}
         />
       ) : null}
     </div>

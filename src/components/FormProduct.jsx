@@ -11,8 +11,15 @@ import { InputNumber } from "primereact/inputnumber";
 import { Dropdown } from "primereact/dropdown";
 import { extractSuffixSlug } from "../utils/common";
 import { ActionMode } from "../constants/common";
+import { Button } from "primereact/button";
 
-const FormProduct = ({ mode, categories, productInfo = {}, onSubmit }) => {
+const FormProduct = ({
+  mode,
+  categories,
+  productInfo = {},
+  onSubmit,
+  isView = true,
+}) => {
   const {
     register,
     handleSubmit,
@@ -44,6 +51,7 @@ const FormProduct = ({ mode, categories, productInfo = {}, onSubmit }) => {
                 id="name"
                 placeholder="Vui lòng nhập tên sản phẩm"
                 {...register("name")}
+                readOnly={isView}
                 className={`w-full ${errors.name?.message ? "p-invalid" : ""}`}
               />
             </FloatLabel>
@@ -57,6 +65,7 @@ const FormProduct = ({ mode, categories, productInfo = {}, onSubmit }) => {
                 mode="currency"
                 currency="VND"
                 value={getValues("price")}
+                readOnly={isView}
                 onValueChange={(e) => setValue("price", e.value)}
                 placeholder="Vui lòng nhập giá sản phẩm"
                 locale="vi-VN"
@@ -75,6 +84,7 @@ const FormProduct = ({ mode, categories, productInfo = {}, onSubmit }) => {
                   id="category"
                   value={selectedCategory}
                   onChange={(e) => setValue("categoryId", e.target.value)}
+                  readOnly={isView}
                   options={categories}
                   optionValue="id"
                   optionLabel="name"
@@ -90,6 +100,7 @@ const FormProduct = ({ mode, categories, productInfo = {}, onSubmit }) => {
               <label htmlFor="slug">Đường dẫn sản phẩm</label>
               <InputText
                 id="slug"
+                readOnly={isView}
                 placeholder="Vui lòng nhập đường dẫn sản phẩm"
                 {...register("slug")}
                 className={`w-full ${errors.slug?.message ? "p-invalid" : ""}`}
@@ -102,6 +113,7 @@ const FormProduct = ({ mode, categories, productInfo = {}, onSubmit }) => {
           <InputTextarea
             id="description"
             className="w-full"
+            readOnly={isView}
             value={getValues("description")}
             onChange={(e) => setValue("description", e.target.value)}
             rows={5}
@@ -109,9 +121,9 @@ const FormProduct = ({ mode, categories, productInfo = {}, onSubmit }) => {
         </div>
 
         <div className="text-end mt-4">
-          <button type="submit" className="p-button p-component">
+          <Button type="submit" className={`${isView ? "hidden" : ""}`}>
             {mode === ActionMode.Update ? "Cập nhật" : "Tạo mới"}
-          </button>
+          </Button>
         </div>
       </Card>
     </form>

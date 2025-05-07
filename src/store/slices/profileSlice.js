@@ -12,6 +12,8 @@ export const fetchPersonalProfile = createAsyncThunk(
 
 const initialState = {
   data: null,
+  userId: null,
+  role: null,
   loading: false,
   error: null,
 };
@@ -27,7 +29,9 @@ const getPersonalProfileSlice = createSlice({
       })
       .addCase(fetchPersonalProfile.fulfilled, (state, action) => {
         state.loading = false;
-        state.data = action.payload;
+        state.data = action.payload;;
+        state.role = action.payload.role[0];
+        state.userId = action.payload.id;
       })
       .addCase(fetchPersonalProfile.rejected, (state, action) => {
         state.loading = false;

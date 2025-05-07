@@ -102,6 +102,7 @@ const ProfileSetting = () => {
         productImage={imageUrl}
         showSweetAlert={false}
         onUploaded={onUploaded}
+        isView={false}
       />
 
       <Card title="Đổi mật khẩu">

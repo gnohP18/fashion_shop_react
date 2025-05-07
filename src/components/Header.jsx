@@ -50,6 +50,7 @@ const Header = ({ onToggleSidebar }) => {
         logoutAsync().then(() => {
           setAccessToken("", STORAGE_AUTH_ACCESS_KEY);
           setRefreshToken("", STORAGE_AUTH_REFRESH_KEY);
+          hasLoaded.current = false;
           navigate("/login");
         });
       },

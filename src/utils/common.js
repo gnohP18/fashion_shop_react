@@ -1,3 +1,5 @@
+import { RoleNames } from "../constants/common";
+
 /**
  * Format tiền Việt Nam Đồng
  * @param {number} amount - Số tiền cần format
@@ -43,4 +45,8 @@ export const formatDateVN = (dateStr) => {
     hour: '2-digit',
     minute: '2-digit'
   });
+}
+
+export const isNotAllowRole = (roleName) => {
+  return [RoleNames.Manager].includes(roleName)
 }

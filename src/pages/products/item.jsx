@@ -9,7 +9,7 @@ import { Button } from "primereact/button";
 import { InputNumber } from "primereact/inputnumber";
 import { Card } from "primereact/card";
 import { Image } from "primereact/image";
-import { EmptyUrl } from "../../constants/common";
+import { EmptyUrl, RoleNames } from "../../constants/common";
 import UploadImageWithPreview from "../../components/UploadImageWithPreview";
 import { Dialog } from "primereact/dialog";
 
@@ -17,6 +17,8 @@ import { Chip } from "primereact/chip";
 import Swal from "sweetalert2";
 import { showErrorToasts } from "../../utils/toast";
 import { handleFormatError } from "../../utils/errorHandler";
+import { useSelector } from "react-redux";
+import { isNotAllowRole } from "../../utils/common";
 
 const screenName = "Chỉnh sửa từng biến thể";
 
@@ -27,6 +29,7 @@ const ProductItem = () => {
   const [visible, setVisible] = useState(false);
   const [productItems, setProductItems] = useState([]);
   const [currentProductItem, setCurrentProductItem] = useState();
+  const role = useSelector((state) => state.personalProfile.role);
 
   const toast = useRef(null);
 
@@ -133,7 +136,9 @@ const ProductItem = () => {
                   />
                   <Button
                     key={productItem.id}
-                    className="w-full text-center mx-2"
+                    className={`w-full text-center mx-2 ${
+                      RoleNames.Manager === role ? "hidden" : ""
+                    }`}
                     icon="pi pi-upload"
                     onClick={() => handleVisibleProductItemImage(productItem)}
                   >
@@ -142,6 +147,7 @@ const ProductItem = () => {
                 </div>
                 <div className="col flex align-items-center">
                   <InputNumber
+                    readOnly={isNotAllowRole(role)}
                     value={productItem.price}
                     className="w-full"
                     mode="currency"
@@ -155,6 +161,7 @@ const ProductItem = () => {
                 </div>
                 <div className="col flex align-items-center">
                   <InputNumber
+                    readOnly={isNotAllowRole(role)}
                     value={productItem.quantity}
                     className="w-full"
                     placeholder="Vui lòng nhập số lượng"
@@ -165,7 +172,10 @@ const ProductItem = () => {
           })}
         </div>
         <div className="flex justify-content-end mt-4">
-          <Button className="p-button p-component" onClick={updateProductItem}>
+          <Button
+            className={isNotAllowRole(role) ? "hidden" : ""}
+            onClick={updateProductItem}
+          >
             Lưu
           </Button>
         </div>
